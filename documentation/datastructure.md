@@ -163,6 +163,7 @@ The network_type can be an enum.
 Entity Types can be set at a global level or per environment.
 
 ```
+
 {
   "_id": "oid100",
   "name": "Room",
@@ -182,19 +183,122 @@ Entity Types can be set at a global level or per environment.
   "_id": "oid103",
   "name": "Sheep",
   "is_movable": true,
-  "environment_slug": "bokmakierie-western-cape"
-}
+  "environment_id": "oid6"
+},
+{
+  "_id": "oid104",
+  "name": "Building",
+  "is_movable": false
+},
+{
+  "_id": "oid105",
+  "name": "Generic",
+  "is_movable": false
+},
 ```
 
 ## Entity
 
-```
+An Entity is used to define organisational structure within an Environment and one of more Devices can be associated with an Entity which is where an Entity will source it's data from.
+
+Devices can move between Entities over time which we will deal with in the Devices section below.
 
 ```
-
+{
+  "_id": "oid200",
+  "name": "Office Building",
+  "environment_id": "oid7",
+  "entity_type_id": "oid104", #building
+  "parent_entity_id": null,
+  "ancestors": []
+},
+{
+  "_id": "oid201",
+  "name": "RSAWEB Office",
+  "environment_id": "oid7",
+  "entity_type_id": "oid105", #generic
+  "parent_entity_id": "oid200",
+  "ancestors": ["oid200"]
+},
+{
+  "_id": "oid202",
+  "name": "Rock Boardroom",
+  "environment_id": "oid7",
+  "entity_type_id": "oid100", #room
+  "parent_entity_id": "oid201",
+  "ancestors": ["oid201", "oid200"]
+}
+```
 
 ## Device Manufacturer
 
+The manufacturer of a Device. These will be set globally and by Three Sprints for now.
+
+```
+{
+  "_id": "oid400",
+  "name": "Elsys"
+},
+{
+  "_id": "oid401",
+  "name": "RAK Wireless"
+},
+{
+  "_id": "oid402",
+  "name": "Three Sprints"
+}
+
+```
+
+## Device Tag
+These will be set globally
+
+```
+{
+  "_id": "oid500",
+  "name": "Temperature",
+  "slug": "temperature"
+},
+{
+  "_id": "oid501",
+  "name": "Humidity",
+  "slug": "humidity"
+},
+{
+  "_id": "oid502",
+  "name": "Passive Infrared",
+  "slug": "pir"
+}
+
+```
+
+
 ## Device Model
 
+```
+{
+  "_id": "oid600",
+  "name": "ERS",
+  "manufacturer_id": "oid400",
+  "tags": ["temperature", "humidity"],
+  "network_types": ["lorawan"]
+},
+{
+  "_id": "oid601",
+  "name": "ERS Eye",
+  "manufacturer_id": "oid400",
+  "tags": ["temperature", "humidity", "pir"],
+  "network_types": ["lorawan"]
+}
+
+```
+
 ## Device
+
+```
+{
+
+
+
+}
+```
