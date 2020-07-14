@@ -203,6 +203,9 @@ An Entity is used to define organisational structure within an Environment and o
 
 Devices can move between Entities over time which we will deal with in the Devices section below.
 
+The ancestors list is very useful in tree type structures as it allows one to get all the children for an Entity even if there are several child entities below it without having to recurse down the tree,
+
+
 ```
 {
   "_id": "oid200",
@@ -223,6 +226,22 @@ Devices can move between Entities over time which we will deal with in the Devic
 {
   "_id": "oid202",
   "name": "Rock Boardroom",
+  "environment_id": "oid7",
+  "entity_type_id": "oid100", #room
+  "parent_entity_id": "oid201",
+  "ancestors": ["oid201", "oid200"]
+},
+{
+  "_id": "oid203",
+  "name": "Paper Boardroom",
+  "environment_id": "oid7",
+  "entity_type_id": "oid100", #room
+  "parent_entity_id": "oid201",
+  "ancestors": ["oid201", "oid200"]
+},
+{
+  "_id": "oid204",
+  "name": "Scissors Boardroom",
   "environment_id": "oid7",
   "entity_type_id": "oid100", #room
   "parent_entity_id": "oid201",
@@ -293,12 +312,93 @@ These will be set globally
 
 ```
 
-## Device
+## Sensor Type
+
+This will be an ever growing list of sensor types and so I think it should remain a collection of its own.
 
 ```
 {
+  "_id": "oid700"
+  "name": "Temperature",
+},
+{
+  "_id": "oid700"
+  "name": "Humidity"
+}
+
+```
+
+## Device
+
+The Sensor reference is the "id" that it is stored against in influx.
+The Device uuid is a string of the ID in Django - this is not a proper uuid.
+But we can use a uuid4 when we store it.
+
+We may need to store last_read_at for the Device in Redis as this will be updated regularly.
 
 
+```
+{
+  "_id": "oid700",
+  "name": "Rock Boardroom Eye",
+  "uuid": "e26b904e-a5b1-4c7f-91ac-9337362df81a",
+  "device_model_id": "oid601",
+  "current_entity_id": "oid202", # Rock Boardroom,
+  "network_id": "oid81" #RSAWEB LoRaWAN
+  "lorawan": {
+    "dev_eui": "A81758FFFE037390",
+    "join_eui": "70B3D57EF0004455",
+    "device_id": "bokmakierie-a81758fffe037390",
+    "application_id": "agriapps",
+    "closest_gateways": [
+      "rg1xx294231": {
+        "last_rssi": -99,
+        "last_snr": 85
+      }
+    ]
+  }
+  "entity_associations": [
+    {
+      "entity_id": "oid202",  # Rock Boardroom
+      "from_time": "2019-12-01T08:31:00Z"
+    },
+    {
+      "entity_id": "oid203",  # Paper Boardroom
+      "from_time": "2019-16-05T10:12:00Z",
+      "to_time": "2019-12-01T08:31:00Z"
+    }
+  ]
+  "sensors": [
+    {
+      "type_id": "oid700", # temperature
+      "reference": "temperature",
+      "system_sensor": false,
+      "thresholds": {
+        "min": 15,
+        "max": 25
+      },
+    },
+    {
+      "type": "oid701", # humidity
+      "reference": "humidity",
+      "system_sensor": false,
+      "thresholds": {
+        "min": 30,
+        "max": 90
+      },
+    },
+    {
+      "type": "oid702", # battery-voltage,
+      "reference": "vdd",
+      "system_sensor": true,
+      "thresholds": {
+        "min": 3.3,
+        "max": 4
+      }
+    }
+  ],
+  "first_seen_at": "2019-04-03T12:31:23Z",
+  "last_seen_at": "2020-04-03T01:34:21Z"
 
 }
 ```
