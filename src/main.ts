@@ -1,10 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { config } from './config';
+import { ENVIRONMENT } from './constants';
+const { server } = config[ENVIRONMENT];
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const portNumber = 3001;
-  await app.listen(portNumber);
-  console.log('IoT API Running on:', `http://localhost:${portNumber}`);
+  await app.listen(server.port);
+  console.log(
+    '[ThreeSprints IoT API Running on]:',
+    `http://${server.host}:${server.port} - [Environment: ${ENVIRONMENT}]`,
+  );
 }
 bootstrap();
