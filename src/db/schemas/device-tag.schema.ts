@@ -1,13 +1,9 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import * as mongoose from 'mongoose';
 
-@Schema({ timestamps: true })
-export class DeviceTag extends Document {
-  @Prop()
-  name: string;
-
-  @Prop()
-  slug: string;
-}
-
-export const DeviceTagSchema = SchemaFactory.createForClass(DeviceTag);
+export const DeviceTagSchema = new mongoose.Schema(
+  {
+    name: String,
+    slug: String,
+  },
+  { timestamps: true },
+);

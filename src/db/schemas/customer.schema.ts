@@ -1,26 +1,21 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import * as mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
-@Schema({ timestamps: true })
-export class Customer extends Document {
-  @Prop()
-  name: string;
-
-  @Prop()
-  environments: [
-    {
-      type: MongooseSchema.Types.ObjectId;
-      ref: 'Environment';
-    },
-  ];
-
-  @Prop()
-  users: [
-    {
-      type: MongooseSchema.Types.ObjectId;
-      ref: 'User';
-    },
-  ];
-}
-
-export const CustomerSchema = SchemaFactory.createForClass(Customer);
+export const CustomerSchema = new mongoose.Schema(
+  {
+    name: String,
+    environments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Environment',
+      },
+    ],
+    users: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+  },
+  { timestamps: true },
+);

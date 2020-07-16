@@ -1,11 +1,8 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { SensorType as TypeOfSensor } from '../../types';
+import * as mongoose from 'mongoose';
 
-@Schema({ timestamps: true })
-export class SensorType extends Document {
-  @Prop()
-  name: TypeOfSensor;
-}
-
-export const SensorTypeSchema = SchemaFactory.createForClass(SensorType);
+export const SensorTypeSchema = new mongoose.Schema(
+  {
+    name: String,
+  },
+  { timestamps: true },
+);

@@ -1,46 +1,27 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import * as mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
-@Schema({ timestamps: true })
-export class Device extends Document {
-  @Prop()
-  name: string;
-
-  @Prop()
-  uuid: string;
-
-  @Prop()
-  deviceModel: { type: MongooseSchema.Types.ObjectId; ref: 'DeviceModel' };
-
-  @Prop()
-  currentEntity: { type: MongooseSchema.Types.ObjectId; ref: 'Entity' };
-
-  @Prop()
-  network: { type: MongooseSchema.Types.ObjectId; ref: 'Network' };
-
-  @Prop()
-  networkConfig: Record<string, unknown>;
-
-  @Prop()
-  entityAssociations: [
-    {
-      entity: {
-        type: MongooseSchema.Types.ObjectId;
-        ref: 'Entity';
-      };
-      fromTime: [{ type: MongooseSchema.Types.Date }];
-      toTime: [{ type: MongooseSchema.Types.Date }];
-    },
-  ];
-
-  @Prop()
-  sensors: Record<string, unknown>[];
-
-  @Prop()
-  firstSeenAt: Date;
-
-  @Prop()
-  lastSeenAt: Date;
-}
-
-export const DeviceSchema = SchemaFactory.createForClass(Device);
+export const DeviceSchema = new mongoose.Schema(
+  {
+    name: String,
+    uuid: String,
+    deviceModel: { type: Schema.Types.ObjectId, ref: 'DeviceModel' },
+    currentEntity: { type: Schema.Types.ObjectId, ref: 'Entity' },
+    network: { type: Schema.Types.ObjectId, ref: 'Network' },
+    networkConfig: {},
+    entityAssociations: [
+      {
+        entity: {
+          type: Schema.Types.ObjectId,
+          ref: 'Entity',
+        },
+        fromTime: { type: Schema.Types.Date },
+        toTime: { type: Schema.Types.Date },
+      },
+    ],
+    sensors: [],
+    firstSeenAt: Date,
+    lastSeenAt: Date,
+  },
+  { timestamps: true },
+);

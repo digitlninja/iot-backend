@@ -1,4 +1,5 @@
-export const ENVIRONMENT = process.env.NODE_ENV || 'development';
-
-// This is here to switch to use a non dockerized instance of the db (requires mongodb to be running locally)
-// export const ENVIRONMENT = 'nonDocker' || process.env.NODE_ENV || 'development';
+// Uncomment to switch when using a non dockerized instance (switches the db and server config, requires mongo to be running locally)
+const useNonDocker = true;
+export const ENVIRONMENT = useNonDocker
+  ? 'nonDocker'
+  : process.env.NODE_ENV || 'development';

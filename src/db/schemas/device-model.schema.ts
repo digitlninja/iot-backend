@@ -1,20 +1,12 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
-import { NetworkType } from '../../types';
+import * as mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
-@Schema({ timestamps: true })
-export class DeviceModel extends Document {
-  @Prop()
-  name: string;
-
-  @Prop()
-  manufacturer: { type: MongooseSchema.Types.ObjectId; ref: 'DeviceModel' };
-
-  @Prop()
-  tags: { type: MongooseSchema.Types.ObjectId; ref: 'DeviceTag' };
-
-  @Prop()
-  networkTypes: NetworkType[];
-}
-
-export const DeviceModelSchema = SchemaFactory.createForClass(DeviceModel);
+export const DeviceModelSchema = new mongoose.Schema(
+  {
+    name: String,
+    manufacturer: { type: Schema.Types.ObjectId, ref: 'DeviceModel' },
+    tags: { type: Schema.Types.ObjectId, ref: 'DeviceTag' },
+    networkTypes: String,
+  },
+  { timestamps: true },
+);

@@ -1,13 +1,9 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import * as mongoose from 'mongoose';
 
-@Schema({ timestamps: true })
-export class EntityType extends Document {
-  @Prop()
-  name: string;
-
-  @Prop()
-  isMovable: boolean;
-}
-
-export const EntityTypeSchema = SchemaFactory.createForClass(EntityType);
+export const EntityTypeSchema = new mongoose.Schema(
+  {
+    name: String,
+    isMovable: Boolean,
+  },
+  { timestamps: true },
+);
