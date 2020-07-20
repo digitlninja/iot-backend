@@ -3,7 +3,7 @@ services:
   iotapi:
     image: iotapi
     build: .
-    command: 'npm run start'
+    command: 'npm run start:dev'
     ports:
       - '3001:3001'
     depends_on:
