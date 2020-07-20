@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
-import { Schema } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
-export const UserrSchema = new mongoose.Schema(
+export const UserSchema = new mongoose.Schema(
   {
     name: String,
     email: String,
@@ -21,3 +21,9 @@ export const UserrSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+export interface UserModel extends Document {
+  email: string;
+  username: string;
+  password: string;
+}
