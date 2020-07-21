@@ -10,13 +10,17 @@ export interface User {
     id?: string;
     email: string;
     username: string;
-    password: string;
 }
 
 export interface IQuery {
     users(): User[] | Promise<User[]>;
 }
 
+export interface CognitoAccessToken {
+    jwtToken?: string;
+}
+
 export interface IMutation {
-    signUp(email: string, username: string, password: string): User | Promise<User>;
+    signUp(email: string, username: string, password?: string): User | Promise<User>;
+    login(username: string, password: string): CognitoAccessToken | Promise<CognitoAccessToken>;
 }

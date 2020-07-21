@@ -14,7 +14,6 @@ const environment = config[ENVIRONMENT];
 describe('DashboardRepository', () => {
   let dashboardRepository: DashboardRepository;
   beforeEach(async () => {
-    console.log({ environment });
     const module = await Test.createTestingModule({
       imports: [
         MongooseModule.forRoot(environment.database.url),

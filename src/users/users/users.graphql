@@ -2,13 +2,17 @@ type User {
   id: String
   email: String!
   username: String!
-  password: String!
 }
 
 type Query {
   users: [User]
 }
 
+type CognitoAccessToken {
+  jwtToken: String
+}
+
 type Mutation {
-  signUp(email: String!, username: String!, password: String!): User
+  signUp(email: String!, username: String!, password: String): User
+  login(username: String!, password: String!): CognitoAccessToken
 }

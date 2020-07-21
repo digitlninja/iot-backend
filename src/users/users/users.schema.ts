@@ -4,6 +4,7 @@ import { Document, Schema } from 'mongoose';
 export const UserSchema = new mongoose.Schema(
   {
     name: String,
+    username: String,
     email: String,
     customer: {
       type: Schema.Types.ObjectId,
