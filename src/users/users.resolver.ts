@@ -1,12 +1,19 @@
-import { Resolver, Mutation } from '@nestjs/graphql';
+import { Resolver, Mutation, Query } from '@nestjs/graphql';
 import { UsersService } from './users.service';
-import { Body } from '@nestjs/common';
+import { Body, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User, CognitoAccessToken } from 'src/graphql';
+import { GqlAuthGuard } from './auth/gql-auth.guard';
 
 @Resolver('User')
 export class UsersResolver {
   constructor(private usersService: UsersService) {}
+
+  @Query()
+  @UseGuards(GqlAuthGuard)
+  async users(): Promise<User[]> {
+    return await this.usersService.getUsers();
+  }
 
   @Mutation()
   async signUp(@Body() createUserDto: CreateUserDto): Promise<User> {

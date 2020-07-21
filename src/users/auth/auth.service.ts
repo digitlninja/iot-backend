@@ -7,7 +7,7 @@ import {
   CognitoUserPool,
   CognitoAccessToken,
 } from 'amazon-cognito-identity-js';
-import { CreateUserDto } from '../users/dtos/create-user.dto';
+import { CreateUserDto } from '../dtos/create-user.dto';
 
 @Injectable()
 export class AuthService {

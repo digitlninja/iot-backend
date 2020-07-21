@@ -8,8 +8,8 @@
 /* eslint-disable */
 export interface User {
     id?: string;
-    email: string;
-    username: string;
+    email?: string;
+    username?: string;
 }
 
 export interface IQuery {

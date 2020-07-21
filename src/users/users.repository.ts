@@ -9,6 +9,10 @@ import { UserModel } from './users.schema';
 export class UsersRepository {
   constructor(@InjectModel('User') private userModel: Model<UserModel>) {}
 
+  async getUsers(): Promise<User[]> {
+    return this.userModel.find();
+  }
+
   async createUser(creatUserDTO: CreateUserDto): Promise<User> {
     const user = new this.userModel(creatUserDTO);
     return user.save();

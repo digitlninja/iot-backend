@@ -7,7 +7,7 @@ import { AppService } from './app.service';
 import { ENVIRONMENT } from './constants';
 import { config } from './config';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { UsersModule } from './users/users/users.module';
+import { UsersModule } from './users/users.module';
 import { join } from 'path';
 import { AuthService } from './users/auth/auth.service';
 import { AuthConfig } from './users/auth/auth.config';
@@ -20,6 +20,7 @@ const environment = config[ENVIRONMENT];
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
       },
+      context: ({ req }) => ({ headers: req.headers }),
     }),
     ConfigModule.forRoot({
       isGlobal: true,
