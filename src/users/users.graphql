@@ -11,8 +11,13 @@ type Query {
 type CognitoAccessToken {
   jwtToken: String
 }
+type CognitoTokens {
+  idToken: String
+  accessToken: String
+  refreshToken: String
+}
 
 type Mutation {
   signUp(email: String!, username: String!, password: String): User
-  login(username: String!, password: String!): CognitoAccessToken
+  login(username: String!, password: String!): CognitoTokens
 }

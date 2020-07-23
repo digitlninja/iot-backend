@@ -5,9 +5,9 @@ import {
   CognitoUser,
   CognitoUserAttribute,
   CognitoUserPool,
-  CognitoAccessToken,
 } from 'amazon-cognito-identity-js';
 import { CreateUserDto } from '../dtos/create-user.dto';
+import { CognitoTokens } from 'src/graphql';
 
 @Injectable()
 export class AuthService {
@@ -44,10 +44,7 @@ export class AuthService {
     });
   }
 
-  authenticateUser(
-    username: string,
-    password: string,
-  ): Promise<CognitoAccessToken> {
+  authenticateUser(username: string, password: string): Promise<CognitoTokens> {
     const authenticationDetails = new AuthenticationDetails({
       Username: username,
       Password: password,
@@ -61,7 +58,11 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       return newUser.authenticateUser(authenticationDetails, {
         onSuccess: result => {
-          resolve(result.getAccessToken());
+          resolve({
+            idToken: result.getIdToken().getJwtToken(),
+            accessToken: result.getAccessToken().getJwtToken(),
+            refreshToken: result.getRefreshToken().getToken(),
+          });
         },
         onFailure: err => {
           reject(err);
