@@ -28,13 +28,10 @@ export class GqlAuthGuard implements CanActivate, OnModuleInit {
   ) {}
 
   async onModuleInit(): Promise<void> {
-    this.cacheManager.set<PublicKeyDictionary>(
-      'jwks',
-      await this._getAWSPublicKeysAsDictionary(),
-      {
-        ttl: 3600,
-      },
-    );
+    const publicKeys = await this._getAWSPublicKeysAsDictionary();
+    this.cacheManager.set<PublicKeyDictionary>('jwks', publicKeys, {
+      ttl: 3600,
+    });
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
