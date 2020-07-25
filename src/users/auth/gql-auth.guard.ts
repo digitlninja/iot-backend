@@ -36,12 +36,12 @@ export class GqlAuthGuard implements CanActivate, OnModuleInit {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context).getContext();
-    if (!ctx.headers.authorization) {
+    if (!ctx.req.headers.authorization) {
       return false;
     }
     try {
       const validationResult = await this.validateToken(
-        ctx.headers.authorization,
+        ctx.req.headers.authorization,
       );
       ctx.user = validationResult;
       return true;

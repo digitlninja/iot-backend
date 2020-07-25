@@ -20,7 +20,7 @@ const environment = config[ENVIRONMENT];
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
       },
-      context: ({ req }) => ({ headers: req.headers }),
+      context: ({ req, res }) => ({ req, res }),
     }),
     ConfigModule.forRoot({
       isGlobal: true,

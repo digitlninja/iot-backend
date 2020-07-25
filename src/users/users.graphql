@@ -20,4 +20,5 @@ type CognitoTokens {
 type Mutation {
   signUp(email: String!, username: String!, password: String): User
   login(username: String!, password: String!): CognitoTokens
+  refreshUserTokens(username: String!, refreshToken: String!): CognitoTokens
 }

@@ -5,6 +5,8 @@ import {
   CognitoUser,
   CognitoUserAttribute,
   CognitoUserPool,
+  CognitoUserSession,
+  CognitoRefreshToken,
 } from 'amazon-cognito-identity-js';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { CognitoTokens } from 'src/graphql';
@@ -44,6 +46,16 @@ export class AuthService {
     });
   }
 
+  private _getTokensFromSession(
+    userSession: CognitoUserSession,
+  ): CognitoTokens {
+    return {
+      idToken: userSession.getIdToken().getJwtToken(),
+      accessToken: userSession.getAccessToken().getJwtToken(),
+      refreshToken: userSession.getRefreshToken().getToken(),
+    };
+  }
+
   authenticateUser(username: string, password: string): Promise<CognitoTokens> {
     const authenticationDetails = new AuthenticationDetails({
       Username: username,
@@ -58,19 +70,42 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       return newUser.authenticateUser(authenticationDetails, {
         onSuccess: result => {
-          resolve({
-            idToken: result.getIdToken().getJwtToken(),
-            accessToken: result.getAccessToken().getJwtToken(),
-            refreshToken: result.getRefreshToken().getToken(),
-          });
+          resolve(this._getTokensFromSession(result));
         },
-        onFailure: err => {
-          reject(err);
+        onFailure: error => {
+          console.log(
+            '[Auth Service: Cognito authenticateUser() error]',
+            error,
+          );
+          reject(error.message);
         },
         newPasswordRequired: function(userAttributes, requiredAttributes) {
           delete userAttributes.email_verified;
           newUser.completeNewPasswordChallenge(password, userAttributes, this);
         },
+      });
+    });
+  }
+
+  refreshUserTokens(
+    username: string,
+    refreshToken: string,
+  ): Promise<CognitoTokens> {
+    const userData = {
+      Username: username,
+      Pool: this.userPool,
+    };
+    const RefreshToken = new CognitoRefreshToken({
+      RefreshToken: refreshToken,
+    });
+    const cognitoUser = new CognitoUser(userData);
+    return new Promise((resolve, reject) => {
+      return cognitoUser.refreshSession(RefreshToken, (err, userSession) => {
+        const tokens = this._getTokensFromSession(userSession);
+        resolve(tokens);
+        if (err) {
+          reject(err.message);
+        }
       });
     });
   }

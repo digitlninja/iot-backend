@@ -29,4 +29,5 @@ export interface CognitoTokens {
 export interface IMutation {
     signUp(email: string, username: string, password?: string): User | Promise<User>;
     login(username: string, password: string): CognitoTokens | Promise<CognitoTokens>;
+    refreshUserTokens(username: string, refreshToken: string): CognitoTokens | Promise<CognitoTokens>;
 }
