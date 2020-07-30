@@ -19,8 +19,13 @@ const environment = config[ENVIRONMENT];
       typePaths: ['./**/*.graphql'],
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
+        emitTypenameField: true,
       },
       context: ({ req, res }) => ({ req, res }),
+      cors: {
+        credentials: true,
+        origin: process.env.IOT_UI_URL || 'http://localhost:3000',
+      },
     }),
     ConfigModule.forRoot({
       isGlobal: true,

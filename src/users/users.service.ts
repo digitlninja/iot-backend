@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
-import { CreateUserDto } from './dtos/create-user.dto';
 import { AuthService } from './auth/auth.service';
-import { CognitoTokens } from 'src/graphql';
+import { SignUpInput, LoginResult, SignUpResult, User } from 'src/graphql';
+import { LoginDTO } from './types/login.dto';
 
 @Injectable()
 export class UsersService {
@@ -15,15 +15,12 @@ export class UsersService {
     return await this.userRepository.getUsers();
   }
 
-  async signUp(createUserDTO: CreateUserDto) {
-    await this.authService.signUp(createUserDTO);
-    return await this.userRepository.createUser(createUserDTO);
+  async signUp(user: SignUpInput): Promise<SignUpResult> {
+    await this.authService.signUp(user);
+    return await this.userRepository.createUser(user);
   }
 
-  async login(createUserDTO: CreateUserDto): Promise<CognitoTokens> {
-    return await this.authService.authenticateUser(
-      createUserDTO.username,
-      createUserDTO.password,
-    );
+  async logIn(user: LoginDTO): Promise<LoginResult> {
+    return await this.authService.authenticateUser(user);
   }
 }

@@ -8,8 +8,9 @@ import {
   CognitoUserSession,
   CognitoRefreshToken,
 } from 'amazon-cognito-identity-js';
-import { CreateUserDto } from '../dtos/create-user.dto';
 import { CognitoTokens } from 'src/graphql';
+import { LoginDTO } from '../types/login.dto';
+import { RegisterDTO } from '../types/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -24,8 +25,8 @@ export class AuthService {
     });
   }
 
-  signUp(createUserDto: CreateUserDto): Promise<CognitoUser> {
-    const { username, email, password } = createUserDto;
+  signUp(user: RegisterDTO): Promise<CognitoUser> {
+    const { email, username, password } = user;
     const attributeList = [
       new CognitoUserAttribute({
         Name: 'email',
@@ -38,8 +39,8 @@ export class AuthService {
         result,
       ) {
         if (error) {
-          console.log(error);
-          reject(error.message);
+          console.log('[Auth Service: Cognito signUp() error]', error);
+          reject(error);
         }
         resolve(result.user);
       });
@@ -56,7 +57,8 @@ export class AuthService {
     };
   }
 
-  authenticateUser(username: string, password: string): Promise<CognitoTokens> {
+  authenticateUser(user: LoginDTO): Promise<CognitoTokens> {
+    const { username, password } = user;
     const authenticationDetails = new AuthenticationDetails({
       Username: username,
       Password: password,
@@ -65,7 +67,6 @@ export class AuthService {
       Username: username,
       Pool: this.userPool,
     };
-
     const newUser = new CognitoUser(userData);
     return new Promise((resolve, reject) => {
       return newUser.authenticateUser(authenticationDetails, {
@@ -77,7 +78,7 @@ export class AuthService {
             '[Auth Service: Cognito authenticateUser() error]',
             error,
           );
-          reject(error.message);
+          reject(error);
         },
         newPasswordRequired: function(userAttributes, requiredAttributes) {
           delete userAttributes.email_verified;

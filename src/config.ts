@@ -19,6 +19,7 @@ interface IConfig {
     server: {
       host: string;
       port: string;
+      url: string;
     };
   };
   production: unknown;
@@ -50,6 +51,7 @@ export const config: IConfig = {
     server: {
       host: 'localhost',
       port: '3001',
+      url: 'http://localhost:3001',
     },
   },
   production: {},

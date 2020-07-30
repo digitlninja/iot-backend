@@ -1,3 +1,53 @@
+# TODO Move to app.graphql (when created)
+type ErrorResult {
+  id: String
+  path: String!
+  message: String!
+}
+
+type ValidationFailed {
+  id: String
+  path: String!
+  messages: [String!]
+}
+
+type CognitoError {
+  id: String
+  path: String!
+  code: String!
+  message: String!
+}
+
+type UsernameNotFound {
+  id: String
+  path: String!
+  message: String!
+}
+
+type UserNotConfirmed {
+  id: String
+  path: String!
+  message: String!
+}
+
+type UsernameExists {
+  id: String
+  path: String!
+  message: String!
+}
+
+type IncorrectCredentials {
+  id: String
+  path: String!
+  message: String!
+}
+
+type TooManyPasswordAttempts {
+  id: String
+  path: String!
+  message: String!
+}
+
 type User {
   id: String
   email: String
@@ -11,14 +61,39 @@ type Query {
 type CognitoAccessToken {
   jwtToken: String
 }
+
 type CognitoTokens {
   idToken: String
   accessToken: String
   refreshToken: String
 }
 
+input SignUpInput {
+  email: String!
+  username: String!
+  password: String!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
+
+union LoginResult =
+    CognitoTokens
+  | IncorrectCredentials
+  | TooManyPasswordAttempts
+  | UsernameNotFound
+  | UserNotConfirmed
+  | ValidationFailed
+  | ErrorResult
+
+# change IncorrectCredentials as not accurate always
+union SignUpResult = User | UsernameExists | ValidationFailed | ErrorResult
+
 type Mutation {
-  signUp(email: String!, username: String!, password: String): User
-  login(username: String!, password: String!): CognitoTokens
-  refreshUserTokens(username: String!, refreshToken: String!): CognitoTokens
+  signUp(user: SignUpInput): SignUpResult
+  logIn(user: LoginInput): LoginResult
+  logOut: Boolean
+  refreshUserTokens: CognitoTokens
 }

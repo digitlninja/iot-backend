@@ -9,3 +9,19 @@ export const cognitoTokenTypes = {
   access: 'access',
   refresh: 'refresh',
 };
+
+export const __typeNames = {
+  ErrorResult: 'ErrorResult',
+  ValidationFailed: 'ValidationFailed',
+  CognitoError: 'CognitoError',
+  UsernameNotFound: 'UsernameNotFound',
+  UserNotConfirmed: 'UserNotConfirmed',
+  UsernameExists: 'UsernameExists',
+  IncorrectCredentials: 'IncorrectCredentials',
+  TooManyPasswordAttempts: 'TooManyPasswordAttempts',
+  User: 'User',
+  IQuery: 'IQuery',
+  CognitoAccessToken: 'CognitoAccessToken',
+  CognitoTokens: 'CognitoTokens',
+  IMutation: 'IMutation',
+};
