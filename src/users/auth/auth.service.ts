@@ -105,7 +105,7 @@ export class AuthService {
         const tokens = this._getTokensFromSession(userSession);
         resolve(tokens);
         if (err) {
-          reject(err.message);
+          reject(err);
         }
       });
     });

@@ -25,7 +25,7 @@ export function createErrorResultFromAWSLoginException(error): LoginResult {
       return {
         ...common,
         __typename: 'UserNotConfirmed',
-        message: 'Please confirm your account by clicking on the verify link.',
+        message: 'Please confirm your account by checking your email.',
       };
     default:
       return {

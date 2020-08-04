@@ -39,14 +39,15 @@ export class GqlAuthGuard implements CanActivate, OnModuleInit {
     if (!ctx.req.headers.authorization) {
       return false;
     }
+    let validationResult = {};
     try {
-      const validationResult = await this.validateToken(
+      validationResult = await this.validateToken(
         ctx.req.headers.authorization,
       );
-      ctx.user = validationResult;
+      ctx.validationResult = validationResult;
       return true;
     } catch (err) {
-      return false;
+      throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
     }
   }
 
@@ -117,13 +118,13 @@ export class GqlAuthGuard implements CanActivate, OnModuleInit {
     const { exp, auth_time, iss, token_use } = claim;
     const currentSeconds = Math.floor(new Date().valueOf() / 1000);
     if (currentSeconds > exp || currentSeconds < auth_time) {
-      throw new Error('Invalid or expired claim');
+      throw new HttpException('Expired Claim', HttpStatus.UNAUTHORIZED);
     }
     if (iss !== this.cognitoIssuer) {
-      throw new Error('Invalid claim issuer');
+      throw new HttpException('Invalid claim issuer', HttpStatus.UNAUTHORIZED);
     }
     if (token_use !== 'id') {
-      throw new Error('Claim use is not id');
+      throw new HttpException('Claim use is not id', HttpStatus.UNAUTHORIZED);
     }
     return claim;
   }
@@ -139,7 +140,7 @@ export class GqlAuthGuard implements CanActivate, OnModuleInit {
         throw new Error('Claim made for unknown kid');
       }
       const claim = (await this._verifyToken(encodedToken, key.pem, {
-        algorithms: ['RS256'],
+        algorithms: [`${header.alg}`] as jwt.Algorithm[],
       })) as Claim;
       const { username, client_id } = this._verifyClaim(claim);
       return {
@@ -149,7 +150,7 @@ export class GqlAuthGuard implements CanActivate, OnModuleInit {
       };
     } catch (err) {
       console.log('[GQL Auth Guard: Error]', err);
-      throw new HttpException('Authentication failed', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
     }
   }
 }

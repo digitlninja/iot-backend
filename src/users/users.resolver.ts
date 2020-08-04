@@ -79,14 +79,14 @@ export class UsersResolver {
   }
 
   @Mutation()
-  async refreshUserTokens(@Context() context: ExpressContext) {
+  ): Promise<CognitoTokens> {
     try {
       const refreshToken = context.req.cookies.refreshToken;
       const username = context.req.cookies.username;
       return await this.authService.refreshUserTokens(username, refreshToken);
     } catch (error) {
       console.log('[Users resolver refreshUserTokens mutation: Error]', error);
-      throw error;
+      throw new Error('Token Refresh failed');
     }
   }
 }

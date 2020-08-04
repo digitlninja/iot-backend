@@ -7,6 +7,7 @@ import {
 import { v4 as v4UUID } from 'uuid';
 
 @Catch(BadRequestException)
+// This transforms Validation error (default of BadRequest by the class-validator library) into an ErrorResult
 export class BadRequestTransformer implements ExceptionFilter {
   catch(exception: HttpException) {
     const errorResponse = exception.getResponse() as {
