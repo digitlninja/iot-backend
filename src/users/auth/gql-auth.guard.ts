@@ -18,7 +18,6 @@ import { TokenHeader, PublicKeyDictionary, Claim } from './types/types';
 @Injectable()
 export class GqlAuthGuard implements CanActivate, OnModuleInit {
   private cognitoIssuer = `https://cognito-idp.${this.authConfig.region}.amazonaws.com/${this.authConfig.userPoolId}`;
-
   private jwkEndpoint = `${this.cognitoIssuer}/.well-known/jwks.json`;
 
   constructor(
@@ -29,7 +28,7 @@ export class GqlAuthGuard implements CanActivate, OnModuleInit {
 
   async onModuleInit(): Promise<void> {
     const publicKeys = await this._getAWSPublicKeysAsDictionary();
-    this.cacheManager.set<PublicKeyDictionary>('jwks', publicKeys, {
+    await this.cacheManager.set<PublicKeyDictionary>('jwks', publicKeys, {
       ttl: 3600,
     });
   }
@@ -63,26 +62,30 @@ export class GqlAuthGuard implements CanActivate, OnModuleInit {
   }
 
   private async _getPublicKeyDictionary(): Promise<PublicKeyDictionary> {
-    const cachedPublicKeys = this.cacheManager.get('jwks');
+    const cachedPublicKeys = await this.cacheManager.get('jwks');
     if (!cachedPublicKeys) {
       const publicKeyDictionary = await this._getAWSPublicKeysAsDictionary();
-      this.cacheManager.set<PublicKeyDictionary>('jwks', publicKeyDictionary, {
-        ttl: 3600,
-      });
+      await this.cacheManager.set<PublicKeyDictionary>(
+        'jwks',
+        publicKeyDictionary,
+        {
+          ttl: 3600,
+        },
+      );
       return publicKeyDictionary;
     } else {
       return cachedPublicKeys;
     }
   }
 
-  private _getEncodedTokenFromHeader(authHeader: string): string {
+  private _getEncodedAuthTokenFromHeader(authHeader: string): string {
     if (authHeader.split(' ')[0] !== 'Bearer') {
       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
     }
     return authHeader.split(' ')[1];
   }
 
-  private _getDecodedTokenHeader(encodedToken: string): TokenHeader {
+  private _getDecodedJwtHeader(encodedToken: string): TokenHeader {
     const tokenSections = (encodedToken || '').split('.');
     if (tokenSections.length < 2) {
       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
@@ -118,7 +121,7 @@ export class GqlAuthGuard implements CanActivate, OnModuleInit {
     const { exp, auth_time, iss, token_use } = claim;
     const currentSeconds = Math.floor(new Date().valueOf() / 1000);
     if (currentSeconds > exp || currentSeconds < auth_time) {
-      throw new HttpException('Expired Claim', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Expired claim', HttpStatus.UNAUTHORIZED);
     }
     if (iss !== this.cognitoIssuer) {
       throw new HttpException('Invalid claim issuer', HttpStatus.UNAUTHORIZED);
@@ -132,8 +135,8 @@ export class GqlAuthGuard implements CanActivate, OnModuleInit {
   /* Validates jwt accesstoken */
   async validateToken(authHeader: string) {
     try {
-      const encodedToken = this._getEncodedTokenFromHeader(authHeader);
-      const header = this._getDecodedTokenHeader(encodedToken);
+      const encodedToken = this._getEncodedAuthTokenFromHeader(authHeader);
+      const header = this._getDecodedJwtHeader(encodedToken);
       const keys = await this._getPublicKeyDictionary();
       const key = keys[header.kid];
       if (!key) {
