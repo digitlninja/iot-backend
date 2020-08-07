@@ -6,17 +6,15 @@ import { CreateEnvironmentDTO } from './dtos/create-environment.dto';
 import { ICustomer } from './interfaces/Customer';
 import { EnvironmentSchema } from '../db/schemas/environment.schema';
 
-import { ENVIRONMENT } from '../constants';
-import { config } from '../config';
-const environment = config[ENVIRONMENT];
-
 // TODO: Get tests running in docker
 describe('DashboardRepository', () => {
   let dashboardRepository: DashboardRepository;
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       imports: [
-        MongooseModule.forRoot(environment.database.url),
+        MongooseModule.forRoot(
+          process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/iot',
+        ),
         MongooseModule.forFeature([
           { name: 'Customer', schema: CustomerSchema },
           { name: 'Environment', schema: EnvironmentSchema },

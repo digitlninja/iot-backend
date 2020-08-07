@@ -6,6 +6,21 @@ services:
     command: 'npm run start:dev'
     ports:
       - '3001:3001'
+    environment:
+      - NODE_ENV=development
+      - APP_ENV=${APP_ENV}
+      - APP_HOST=${APP_HOST}
+      - APP_PORT=${APP_PORT}
+      - APP_URL=${APP_URL}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL_NON_DOCKER=${DATABASE_URL_NON_DOCKER}
+      - COGNITO_USER_POOL_ID=${COGNITO_USER_POOL_ID}
+      - COGNITO_CLIENT_ID=${COGNITO_CLIENT_ID}
+      - COGNITO_REGION=${COGNITO_REGION}
+      - IOT_UI_URL=${IOT_UI_URL}
     depends_on:
       - 'mongo'
   mongo:
