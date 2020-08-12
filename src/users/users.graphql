@@ -1,3 +1,4 @@
+# Error results
 # TODO Move to app.graphql (when created)
 type ErrorResult {
   id: String
@@ -48,14 +49,23 @@ type TooManyPasswordAttempts {
   message: String!
 }
 
+type ExpiredCode {
+  id: String
+  path: String!
+  message: String!
+}
+
+type LimitExceeded {
+  id: String
+  path: String!
+  message: String!
+}
+
+# Types
 type User {
   id: String
   email: String
   username: String
-}
-
-type Query {
-  users: [User]
 }
 
 type CognitoAccessToken {
@@ -68,9 +78,20 @@ type CognitoTokens {
   refreshToken: String
 }
 
-input SignUpInput {
+type ForgotPasswordSuccess {
   email: String!
+}
+
+type ConfirmPasswordSuccess {
   username: String!
+}
+
+# Inputs
+input SignUpInput {
+  username: String!
+  email: String!
+  firstName: String!
+  lastName: String!
   password: String!
 }
 
@@ -79,6 +100,18 @@ input LoginInput {
   password: String!
 }
 
+input ConfirmPasswordInput {
+  username: String!
+  verificationCode: String!
+  newPassword: String!
+}
+
+input ForgotPasswordInput {
+  email: String!
+}
+
+# Results
+# TODO: Change IncorrectCredentials as not accurate always
 union LoginResult =
     CognitoTokens
   | IncorrectCredentials
@@ -88,12 +121,33 @@ union LoginResult =
   | ValidationFailed
   | ErrorResult
 
-# change IncorrectCredentials as not accurate always
 union SignUpResult = User | UsernameExists | ValidationFailed | ErrorResult
+
+union ForgotPasswordResult =
+    ForgotPasswordSuccess
+  | ValidationFailed
+  | LimitExceeded
+  | ErrorResult
+
+union ConfirmPasswordResult =
+    ConfirmPasswordSuccess
+  | ValidationFailed
+  | ExpiredCode
+  | LimitExceeded
+  | ErrorResult
+
+# Operations
+type Query {
+  users: [User]
+}
 
 type Mutation {
   signUp(user: SignUpInput): SignUpResult
   logIn(user: LoginInput): LoginResult
   logOut: Boolean
+  forgotPassword(username: String!): ForgotPasswordResult
+  confirmPassword(
+    confirmPasswordInput: ConfirmPasswordInput
+  ): ConfirmPasswordResult
   refreshUserTokens: CognitoTokens
 }

@@ -1,7 +1,15 @@
 import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { UseGuards } from '@nestjs/common';
-import { User, CognitoTokens, LoginResult, SignUpResult } from 'src/graphql';
+import {
+  User,
+  CognitoTokens,
+  LoginResult,
+  SignUpResult,
+  ForgotPasswordResult,
+  ForgotPasswordSuccess,
+  ConfirmPasswordResult,
+} from 'src/graphql';
 import { GqlAuthGuard } from './auth/gql-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { RegisterDTO } from './types/register.dto';
@@ -10,8 +18,10 @@ import { ExpressContext } from 'apollo-server-express/dist/ApolloServer';
 import {
   createErrorResultFromAWSLoginException,
   createErrorResultFromAWSSignUpException,
+  createErrorResultFromAWSForgotPasswordException,
+  createErrorResultFromAWSConfirmPasswordException,
 } from 'src/shared/helpers';
-import { __typeNames } from 'src/constants';
+import { ConfirmPasswordDTO } from './types/confirm-password.dto';
 
 interface MyError extends Error {
   id?: string;
@@ -79,6 +89,38 @@ export class UsersResolver {
   }
 
   @Mutation()
+  async forgotPassword(
+    @Args('username') username: string,
+  ): Promise<ForgotPasswordResult> {
+    try {
+      const result = (await this.usersService.forgotPassword(
+        username,
+      )) as ForgotPasswordSuccess;
+      return { email: result.email, __typename: 'ForgotPasswordSuccess' };
+    } catch (error) {
+      console.log('[Users resolver forgotPassword mutation: Error]', error);
+      return createErrorResultFromAWSForgotPasswordException(error);
+    }
+  }
+
+  @Mutation()
+  async confirmPassword(
+    @Args('confirmPasswordInput') confirmPasswordDTO: ConfirmPasswordDTO,
+  ): Promise<ConfirmPasswordResult> {
+    try {
+      const { username } = await this.usersService.confirmPassword(
+        confirmPasswordDTO,
+      );
+      return { username, __typename: 'ConfirmPasswordSuccess' };
+    } catch (error) {
+      console.log('[Users resolver confirmPassword mutation: Error]', error);
+      return createErrorResultFromAWSConfirmPasswordException(error);
+    }
+  }
+
+  @Mutation()
+  async refreshUserTokens(
+    @Context() context: ExpressContext,
   ): Promise<CognitoTokens> {
     try {
       const refreshToken = context.req.cookies.refreshToken;

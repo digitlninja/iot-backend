@@ -31,7 +31,6 @@ import { AppConfigModule } from './config/app-config.module';
       load: [configuration],
       isGlobal: true,
     }),
-
     MongooseModule.forRootAsync({
       imports: [AppConfigModule],
       useFactory: (appConfigService: AppConfigService) => ({

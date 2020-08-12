@@ -8,9 +8,10 @@ import {
   CognitoUserSession,
   CognitoRefreshToken,
 } from 'amazon-cognito-identity-js';
-import { CognitoTokens } from 'src/graphql';
+import { CognitoTokens, ConfirmPasswordSuccess } from 'src/graphql';
 import { LoginDTO } from '../types/login.dto';
 import { RegisterDTO } from '../types/register.dto';
+import { ConfirmPasswordDTO } from '../types/confirm-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -26,13 +27,23 @@ export class AuthService {
   }
 
   signUp(user: RegisterDTO): Promise<CognitoUser> {
-    const { email, username, password } = user;
+    const { email, username, firstName, lastName, password } = user;
+
     const attributeList = [
       new CognitoUserAttribute({
         Name: 'email',
         Value: email,
       }),
+      new CognitoUserAttribute({
+        Name: 'given_name',
+        Value: firstName,
+      }),
+      new CognitoUserAttribute({
+        Name: 'family_name',
+        Value: lastName,
+      }),
     ];
+
     return new Promise((resolve, reject) => {
       this.userPool.signUp(username, password, attributeList, null, function(
         error,
@@ -80,9 +91,50 @@ export class AuthService {
           );
           reject(error);
         },
-        newPasswordRequired: function(userAttributes, requiredAttributes) {
+        newPasswordRequired: function(userAttributes) {
           delete userAttributes.email_verified;
           newUser.completeNewPasswordChallenge(password, userAttributes, this);
+        },
+      });
+    });
+  }
+
+  forgotPassword(username: string): Promise<any> {
+    const userData = {
+      Username: username,
+      Pool: this.userPool,
+    };
+    const cognitoUser = new CognitoUser(userData);
+    return new Promise((resolve, reject) => {
+      cognitoUser.forgotPassword({
+        onSuccess: result => {
+          resolve(result.CodeDeliveryDetails);
+        },
+        onFailure: error => {
+          console.log('[Auth Service: Cognito forgotPassword() error]', error);
+          reject(error);
+        },
+      });
+    });
+  }
+
+  confirmPassword(
+    confirmPasswordDTO: ConfirmPasswordDTO,
+  ): Promise<ConfirmPasswordSuccess> {
+    const { username, verificationCode, newPassword } = confirmPasswordDTO;
+    const userData = {
+      Username: username,
+      Pool: this.userPool,
+    };
+    const cognitoUser = new CognitoUser(userData);
+    return new Promise((resolve, reject) => {
+      cognitoUser.confirmPassword(verificationCode, newPassword, {
+        onSuccess: () => {
+          resolve({ username });
+        },
+        onFailure: error => {
+          console.log('[Auth Service: Cognito confirmPassword() error]', error);
+          reject(error);
         },
       });
     });
@@ -101,11 +153,15 @@ export class AuthService {
     });
     const cognitoUser = new CognitoUser(userData);
     return new Promise((resolve, reject) => {
-      return cognitoUser.refreshSession(RefreshToken, (err, userSession) => {
+      return cognitoUser.refreshSession(RefreshToken, (error, userSession) => {
         const tokens = this._getTokensFromSession(userSession);
         resolve(tokens);
-        if (err) {
-          reject(err);
+        if (error) {
+          console.log(
+            '[Auth Service: Cognito refreshUserTokens() error]',
+            error,
+          );
+          reject(error);
         }
       });
     });

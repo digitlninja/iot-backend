@@ -1,8 +1,7 @@
-import { Length, IsAlphanumeric } from 'class-validator';
+import { Length } from 'class-validator';
 
 export class LoginDTO {
-  @IsAlphanumeric()
-  @Length(3, 20)
+  @Length(3, 90)
   username: string;
 
   @Length(8, 99)

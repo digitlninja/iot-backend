@@ -7,14 +7,26 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface SignUpInput {
-    email: string;
     username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
     password: string;
 }
 
 export interface LoginInput {
     username: string;
     password: string;
+}
+
+export interface ConfirmPasswordInput {
+    username: string;
+    verificationCode: string;
+    newPassword: string;
+}
+
+export interface ForgotPasswordInput {
+    email: string;
 }
 
 export interface ErrorResult {
@@ -74,16 +86,25 @@ export interface TooManyPasswordAttempts {
     message: string;
 }
 
+export interface ExpiredCode {
+    __typename?: 'ExpiredCode';
+    id?: string;
+    path: string;
+    message: string;
+}
+
+export interface LimitExceeded {
+    __typename?: 'LimitExceeded';
+    id?: string;
+    path: string;
+    message: string;
+}
+
 export interface User {
     __typename?: 'User';
     id?: string;
     email?: string;
     username?: string;
-}
-
-export interface IQuery {
-    __typename?: 'IQuery';
-    users(): User[] | Promise<User[]>;
 }
 
 export interface CognitoAccessToken {
@@ -98,13 +119,32 @@ export interface CognitoTokens {
     refreshToken?: string;
 }
 
+export interface ForgotPasswordSuccess {
+    __typename?: 'ForgotPasswordSuccess';
+    email: string;
+}
+
+export interface ConfirmPasswordSuccess {
+    __typename?: 'ConfirmPasswordSuccess';
+    username: string;
+}
+
+export interface IQuery {
+    __typename?: 'IQuery';
+    users(): User[] | Promise<User[]>;
+}
+
 export interface IMutation {
     __typename?: 'IMutation';
     signUp(user?: SignUpInput): SignUpResult | Promise<SignUpResult>;
     logIn(user?: LoginInput): LoginResult | Promise<LoginResult>;
     logOut(): boolean | Promise<boolean>;
+    forgotPassword(username: string): ForgotPasswordResult | Promise<ForgotPasswordResult>;
+    confirmPassword(confirmPasswordInput?: ConfirmPasswordInput): ConfirmPasswordResult | Promise<ConfirmPasswordResult>;
     refreshUserTokens(): CognitoTokens | Promise<CognitoTokens>;
 }
 
 export type LoginResult = CognitoTokens | IncorrectCredentials | TooManyPasswordAttempts | UsernameNotFound | UserNotConfirmed | ValidationFailed | ErrorResult;
 export type SignUpResult = User | UsernameExists | ValidationFailed | ErrorResult;
+export type ForgotPasswordResult = ForgotPasswordSuccess | ValidationFailed | LimitExceeded | ErrorResult;
+export type ConfirmPasswordResult = ConfirmPasswordSuccess | ValidationFailed | ExpiredCode | LimitExceeded | ErrorResult;
