@@ -1,0 +1,155 @@
+# Error results
+# TODO Move to app.graphql (when created)
+type ErrorResult {
+  id: String
+  path: String!
+  message: String!
+}
+
+type ValidationFailed {
+  id: String
+  path: String!
+  messages: [String!]
+}
+
+type CognitoError {
+  id: String
+  path: String!
+  code: String!
+  message: String!
+}
+
+type UsernameNotFound {
+  id: String
+  path: String!
+  message: String!
+}
+
+type UserNotConfirmed {
+  id: String
+  path: String!
+  message: String!
+}
+
+type UsernameExists {
+  id: String
+  path: String!
+  message: String!
+}
+
+type IncorrectCredentials {
+  id: String
+  path: String!
+  message: String!
+}
+
+type TooManyPasswordAttempts {
+  id: String
+  path: String!
+  message: String!
+}
+
+type ExpiredCode {
+  id: String
+  path: String!
+  message: String!
+}
+
+type LimitExceeded {
+  id: String
+  path: String!
+  message: String!
+}
+
+# Types
+type User {
+  id: String
+  email: String
+  username: String
+  firstName: String
+  lastName: String
+}
+
+type CognitoAccessToken {
+  jwtToken: String
+}
+
+type CognitoTokens {
+  idToken: String
+  accessToken: String
+  refreshToken: String
+}
+
+type ForgotPasswordSuccess {
+  email: String!
+}
+
+type ConfirmPasswordSuccess {
+  username: String!
+}
+
+# Inputs
+input SignUpInput {
+  username: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
+
+input ConfirmPasswordInput {
+  username: String!
+  verificationCode: String!
+  newPassword: String!
+}
+
+input ForgotPasswordInput {
+  email: String!
+}
+
+# Results
+# TODO: Change IncorrectCredentials as not accurate always
+union LoginResult =
+    CognitoTokens
+  | IncorrectCredentials
+  | TooManyPasswordAttempts
+  | UsernameNotFound
+  | UserNotConfirmed
+  | ValidationFailed
+  | ErrorResult
+
+union SignUpResult = User | UsernameExists | ValidationFailed | ErrorResult
+
+union ForgotPasswordResult =
+    ForgotPasswordSuccess
+  | ValidationFailed
+  | LimitExceeded
+  | ErrorResult
+
+union ConfirmPasswordResult =
+    ConfirmPasswordSuccess
+  | ValidationFailed
+  | ExpiredCode
+  | LimitExceeded
+  | ErrorResult
+
+# Operations
+type Query {
+  users: [User]
+}
+
+type Mutation {
+  signUp(user: SignUpInput): SignUpResult
+  logIn(user: LoginInput): LoginResult
+  logOut: Boolean
+  forgotPassword(username: String!): ForgotPasswordResult
+  confirmPassword(
+    confirmPasswordInput: ConfirmPasswordInput
+  ): ConfirmPasswordResult
+  refreshUserTokens: CognitoTokens
+}

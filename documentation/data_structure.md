@@ -97,9 +97,6 @@ Users is assigned access to an Environment and is assigned one or more roles:
 }
 ```
 
-## Network Type
-
-
 
 ## Network Provider
 
@@ -336,6 +333,8 @@ But we can use a uuid4 when we store it.
 
 We may need to store last_read_at for the Device in Redis as this will be updated regularly.
 
+The network_config section will be specific to the type of network that we are using. I have detailed the lorawan network_type here.
+
 
 ```
 {
@@ -345,7 +344,8 @@ We may need to store last_read_at for the Device in Redis as this will be update
   "device_model_id": "oid601",
   "current_entity_id": "oid202", # Rock Boardroom,
   "network_id": "oid81" #RSAWEB LoRaWAN
-  "lorawan": {
+  "network_config": {
+    "network_type": "lorawan",
     "dev_eui": "A81758FFFE037390",
     "join_eui": "70B3D57EF0004455",
     "device_id": "bokmakierie-a81758fffe037390",
