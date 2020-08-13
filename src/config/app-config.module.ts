@@ -9,7 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ConfigModule.forRoot({
       load: [configuration],
       validationSchema: Joi.object({
-        APP_NAME: Joi.string().default('Iot Backend'),
+        APP_NAME: Joi.string().default('IoT Backend'),
         APP_ENV: Joi.string().valid(
           'development',
           'production',

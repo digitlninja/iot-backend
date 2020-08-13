@@ -66,6 +66,8 @@ type User {
   id: String
   email: String
   username: String
+  firstName: String
+  lastName: String
 }
 
 type CognitoAccessToken {
