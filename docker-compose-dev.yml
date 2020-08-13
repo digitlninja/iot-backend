@@ -2,12 +2,12 @@ version: '3'
 services:
   iotapi:
     image: iotapi
-    build: .
-    command: 'npm run start:dev'
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     ports:
       - '3001:3001'
     environment:
-      - NODE_ENV=development
       - APP_ENV=${APP_ENV}
       - APP_HOST=${APP_HOST}
       - APP_PORT=${APP_PORT}
