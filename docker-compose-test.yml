@@ -8,14 +8,14 @@ services:
     ports:
       - '3001:3001'
     environment:
-      - APP_ENV=nonDocker
+      - APP_ENV=development
       - APP_HOST=${APP_HOST}
       - APP_PORT=${APP_PORT}
       - APP_URL=${APP_URL}
       - DATABASE_HOST=${DATABASE_HOST}
       - DATABASE_PORT=${DATABASE_PORT}
       - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=mongodb://mongo:27017/iot
       - DATABASE_URL_NON_DOCKER=${DATABASE_URL_NON_DOCKER}
       - COGNITO_USER_POOL_ID=${COGNITO_USER_POOL_ID}
       - COGNITO_CLIENT_ID=${COGNITO_CLIENT_ID}
