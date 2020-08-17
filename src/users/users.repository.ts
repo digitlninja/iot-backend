@@ -6,14 +6,15 @@ import { UserModel } from './users.schema';
 
 @Injectable()
 export class UsersRepository {
-  constructor(@InjectModel('User') private userModel: Model<UserModel>) {}
+    constructor(@InjectModel('User') private userModel: Model<UserModel>) {
+    }
 
-  async getUsers(): Promise<User[]> {
-    return this.userModel.find();
-  }
+    async getUsers(): Promise<User[]> {
+        return this.userModel.find();
+    }
 
-  async createUser(user: SignUpInput): Promise<User> {
-    const newUser = new this.userModel({ user });
-    return (await newUser.save()).toObject();
-  }
+    async createUser(user: SignUpInput): Promise<User> {
+        const newUser = new this.userModel({user});
+        return (await newUser.save()).toObject();
+    }
 }
