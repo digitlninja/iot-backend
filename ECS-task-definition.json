@@ -24,25 +24,20 @@
       ],
       "command": null,
       "linuxParameters": null,
-      "cpu": 1024,
+      "cpu": 0,
       "environment": [],
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
       "mountPoints": [],
       "workingDirectory": null,
-      "secrets": [
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:APP_ENV-H8MJyB",
-          "name": "APP_ENV"
-        }
-      ],
+      "secrets": null,
       "dockerSecurityOptions": null,
       "memory": null,
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity:2a6d4232c74f03ee959ec3f6af6cec089179ece5",
+      "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -59,7 +54,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "identity-api"
+      "name": "identity-backend"
     }
   ],
   "placementConstraints": [],
@@ -69,7 +64,7 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/identity-api:15",
+  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/identity-api:20",
   "family": "identity-api",
   "requiresAttributes": [
     {
@@ -95,12 +90,6 @@
       "targetType": null,
       "value": null,
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.secrets.asm.environment-variables"
     },
     {
       "targetId": null,
@@ -133,7 +122,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "1024",
-  "revision": 15,
+  "revision": 20,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
