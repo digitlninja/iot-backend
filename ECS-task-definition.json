@@ -42,7 +42,7 @@
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity",
+      "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity:2a6d4232c74f03ee959ec3f6af6cec089179ece5",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -69,7 +69,7 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/identity-api:14",
+  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/identity-api:15",
   "family": "identity-api",
   "requiresAttributes": [
     {
@@ -133,7 +133,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "1024",
-  "revision": 14,
+  "revision": 15,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
