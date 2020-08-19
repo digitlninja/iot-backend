@@ -9,7 +9,7 @@
         "logDriver": "awslogs",
         "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/identity-api",
+          "awslogs-group": "/ecs/staging-identity-backend",
           "awslogs-region": "eu-west-2",
           "awslogs-stream-prefix": "ecs"
         }
@@ -24,57 +24,57 @@
       ],
       "command": null,
       "linuxParameters": null,
-      "cpu": 1024,
-      "environment": [],
+      "cpu": 0,
+      "environment": [
+        {
+          "name": "APP_ENV",
+          "value": "staging"
+        },
+        {
+          "name": "APP_HOST",
+          "value": "https://identity-staging.threesprints.co/"
+        },
+        {
+          "name": "APP_PORT",
+          "value": "3001"
+        },
+        {
+          "name": "APP_URL\t",
+          "value": "https://identity-staging.threesprints.co/"
+        },
+        {
+          "name": "COGNITO_CLIENT_ID",
+          "value": "5rj2i3f4ao34hcckobblr61sik"
+        },
+        {
+          "name": "COGNITO_REGION\t",
+          "value": "eu-west-2"
+        },
+        {
+          "name": "COGNITO_USER_POOL_ID",
+          "value": "eu-west-2_RiXqtiGF1"
+        },
+        {
+          "name": "DATABASE_URL",
+          "value": "mongodb+srv://staging:gkghjgREY2123213asdasdasdAAAUUUMMNhfgah@staging.7begm.mongodb.net/iot?retryWrites=true&w=majority"
+        },
+        {
+          "name": "IOT_UI_URL",
+          "value": "https://identity-staging.threesprints.co:3000"
+        }
+      ],
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
       "mountPoints": [],
       "workingDirectory": null,
-      "secrets": [
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:IoTBackend-Staging-MsZZlW",
-          "name": "APP_ENV"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:IoTBackend-Staging-MsZZlW",
-          "name": "APP_HOST"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:IoTBackend-Staging-MsZZlW",
-          "name": "DATABASE_URL"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:IoTBackend-Staging-MsZZlW",
-          "name": "APP_PORT"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:IoTBackend-Staging-MsZZlW",
-          "name": "IOT_UI_URL"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:IoTBackend-Staging-MsZZlW",
-          "name": "COGNITO_USER_POOL_ID"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:IoTBackend-Staging-MsZZlW",
-          "name": "COGNITO_CLIENT_ID"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:IoTBackend-Staging-MsZZlW",
-          "name": "COGNITO_REGION"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:IoTBackend-Staging-MsZZlW",
-          "name": "APP_URL"
-        }
-      ],
+      "secrets": null,
       "dockerSecurityOptions": null,
       "memory": null,
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity",
+      "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity:d7a685dd069e653fe9710d48beb35c13c0a88b45",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -91,7 +91,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "identity-api"
+      "name": "staging-identity-backend"
     }
   ],
   "placementConstraints": [],
@@ -101,8 +101,8 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/identity-api:4",
-  "family": "identity-api",
+  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/staging-identity-backend:1",
+  "family": "staging-identity-backend",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -127,12 +127,6 @@
       "targetType": null,
       "value": null,
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.secrets.asm.environment-variables"
     },
     {
       "targetId": null,
@@ -165,7 +159,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "1024",
-  "revision": 4,
+  "revision": 1,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
