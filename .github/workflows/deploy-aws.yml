@@ -70,6 +70,7 @@ jobs:
         task-definition: ECS-task-definition.json
         container-name: staging-identity-backend
         image: ${{ steps.build-image.outputs.image }}
+        aws-sm-name: IoTBackend-Staging
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
