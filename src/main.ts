@@ -7,6 +7,7 @@ import { BadRequestTransformer } from './users/auth/error-transformer.filter';
 import { AppConfigService } from './config/configuration.service';
 
 async function bootstrap() {
+  console.log({ENVIRONMENT_VARIABLES: process.env});
   const appUrl = process.env.APP_URL || 'http://localhost:3001';
   // Add node-fetch to globals (used in interfacing with aws)
   global['fetch'] = require('node-fetch');
