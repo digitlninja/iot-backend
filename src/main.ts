@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ENVIRONMENT } from './constants';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import { BadRequestTransformer } from './users/auth/error-transformer.filter';
@@ -27,7 +26,7 @@ async function bootstrap() {
 
   console.log(
     '[ThreeSprints IoT API Running on]:',
-    `${appUrl} - [Environment: ${ENVIRONMENT}]`,
+    `${appUrl} - [Environment: ${appConfig.appEnv}]`,
   );
   console.log(
     '[Connected to DB]:',
