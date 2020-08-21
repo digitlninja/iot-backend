@@ -24,7 +24,7 @@
       ],
       "command": null,
       "linuxParameters": null,
-      "cpu": 0,
+      "cpu": 1024,
       "environment": [],
       "resourceRequirements": null,
       "ulimits": null,
@@ -42,7 +42,7 @@
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity:511a82d347bd95a1e9b8eb84924097d040bf0834",
+      "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -69,7 +69,7 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/staging-identity-backend:24",
+  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/staging-identity-backend:28",
   "family": "staging-identity-backend",
   "requiresAttributes": [
     {
@@ -133,7 +133,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "1024",
-  "revision": 24,
+  "revision": 28,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
