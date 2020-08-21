@@ -65,12 +65,11 @@ jobs:
 
     - name: Render ECS task definition
       id: task-def
-      uses: brunocascio/amazon-ecs-render-task-definition@v1.2.0
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: ECS-task-definition.json
         container-name: identity-backend
         image: ${{ steps.build-image.outputs.image }}
-        aws-sm-name: IoTBackend-Staging
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
