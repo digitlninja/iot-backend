@@ -33,8 +33,40 @@
       "workingDirectory": null,
       "secrets": [
         {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:IoTBackend-Staging-MsZZlW",
-          "name": "IoTBackend-Staging"
+          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:STAGING_APP_PORT-PWnAFy",
+          "name": "APP_PORT"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:STAGING_APP_URL-rr2Yu3",
+          "name": "APP_URL"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:COGNITO_CLIENT_ID-dg1gJt",
+          "name": "COGNITO_CLIENT_ID"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:COGNITO_REGION-FVdeOS",
+          "name": "COGNITO_REGION"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:COGNITO_USER_POOL_ID-ehUcku",
+          "name": "COGNITO_USER_POOL_ID"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:STAGING_IOT_URL-Ho1jrB",
+          "name": "IOT_UI_URL"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:APP_ENV-H8MJyB",
+          "name": "APP_ENV"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:STAGING_APP_HOST-J6cZHE",
+          "name": "APP_HOST"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:STAGING_DATABASE_URL-oTZdtk",
+          "name": "DATABASE_URL"
         }
       ],
       "dockerSecurityOptions": null,
@@ -69,7 +101,7 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/identity-backend:3",
+  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/identity-backend:6",
   "family": "identity-backend",
   "requiresAttributes": [
     {
@@ -133,7 +165,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "1024",
-  "revision": 3,
+  "revision": 6,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
