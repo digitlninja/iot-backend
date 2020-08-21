@@ -14,7 +14,7 @@ lerna-debug.log*
 .DS_Store
 
 # Secrets
-
+*.env
 # Tests
 /coverage
 /.nyc_output
