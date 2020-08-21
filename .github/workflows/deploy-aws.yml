@@ -76,6 +76,6 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: staging-identity-backend
+        service: identity-backend
         cluster: identity-backend
         wait-for-service-stability: true
