@@ -9,7 +9,7 @@
         "logDriver": "awslogs",
         "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/identity-backend",
+          "awslogs-group": "/ecs/staging-identity-backend",
           "awslogs-region": "eu-west-2",
           "awslogs-stream-prefix": "ecs"
         }
@@ -24,7 +24,7 @@
       ],
       "command": null,
       "linuxParameters": null,
-      "cpu": 1024,
+      "cpu": 0,
       "environment": [],
       "resourceRequirements": null,
       "ulimits": null,
@@ -74,7 +74,7 @@
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity:4f177c5240adda5b3bf8f5f83f7b766e490e5775",
+      "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity:c301a62bcb4120d70d8711717b9641027bf9f212",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -91,7 +91,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "identity-backend"
+      "name": "staging-identity-backend"
     }
   ],
   "placementConstraints": [],
@@ -101,8 +101,8 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/identity-backend:6",
-  "family": "identity-backend",
+  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/staging-identity-backend:15",
+  "family": "staging-identity-backend",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -165,7 +165,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "1024",
-  "revision": 6,
+  "revision": 15,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
