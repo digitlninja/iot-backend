@@ -1,173 +1,74 @@
 {
-  "ipcMode": null,
-  "executionRoleArn": "arn:aws:iam::185944984862:role/ecsTaskExecutionRole",
-  "containerDefinitions": [
-    {
-      "dnsSearchDomains": null,
-      "environmentFiles": null,
-      "logConfiguration": {
-        "logDriver": "awslogs",
-        "secretOptions": null,
-        "options": {
-          "awslogs-group": "/ecs/staging-identity-backend",
-          "awslogs-region": "eu-west-2",
-          "awslogs-stream-prefix": "ecs"
+    "ipcMode": null,
+    "executionRoleArn": "arn:aws:iam::185944984862:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "dnsSearchDomains": null,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/staging-identity-backend",
+                    "awslogs-region": "eu-west-2",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "entryPoint": null,
+            "portMappings": [
+                {
+                    "hostPort": 3001,
+                    "protocol": "tcp",
+                    "containerPort": 3001
+                }
+            ],
+            "command": null,
+            "linuxParameters": null,
+            "cpu": 0,
+            "environment": null,
+            "resourceRequirements": null,
+            "ulimits": null,
+            "dnsServers": null,
+            "mountPoints": null,
+            "workingDirectory": null,
+            "secrets": null,
+            "dockerSecurityOptions": null,
+            "memory": null,
+            "memoryReservation": null,
+            "volumesFrom": null,
+            "stopTimeout": null,
+            "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity:511a82d347bd95a1e9b8eb84924097d040bf0834",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": null,
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": null,
+            "user": null,
+            "readonlyRootFilesystem": null,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": null,
+            "name": "staging-identity-backend",
+            "repositoryCredentials": {
+                "credentialsParameter": ""
+            }
         }
-      },
-      "entryPoint": null,
-      "portMappings": [
-        {
-          "hostPort": 3001,
-          "protocol": "tcp",
-          "containerPort": 3001
-        }
-      ],
-      "command": null,
-      "linuxParameters": null,
-      "cpu": 0,
-      "environment": [],
-      "resourceRequirements": null,
-      "ulimits": null,
-      "dnsServers": null,
-      "mountPoints": [],
-      "workingDirectory": null,
-      "secrets": [
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:STAGING_APP_PORT-PWnAFy",
-          "name": "APP_PORT"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:STAGING_APP_URL-rr2Yu3",
-          "name": "APP_URL"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:COGNITO_CLIENT_ID-dg1gJt",
-          "name": "COGNITO_CLIENT_ID"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:COGNITO_REGION-FVdeOS",
-          "name": "COGNITO_REGION"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:COGNITO_USER_POOL_ID-ehUcku",
-          "name": "COGNITO_USER_POOL_ID"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:STAGING_IOT_URL-Ho1jrB",
-          "name": "IOT_UI_URL"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:APP_ENV-H8MJyB",
-          "name": "APP_ENV"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:STAGING_APP_HOST-J6cZHE",
-          "name": "APP_HOST"
-        },
-        {
-          "valueFrom": "arn:aws:secretsmanager:eu-west-2:185944984862:secret:STAGING_DATABASE_URL-oTZdtk",
-          "name": "DATABASE_URL"
-        }
-      ],
-      "dockerSecurityOptions": null,
-      "memory": null,
-      "memoryReservation": null,
-      "volumesFrom": [],
-      "stopTimeout": null,
-      "image": "185944984862.dkr.ecr.eu-west-2.amazonaws.com/identity:c301a62bcb4120d70d8711717b9641027bf9f212",
-      "startTimeout": null,
-      "firelensConfiguration": null,
-      "dependsOn": null,
-      "disableNetworking": null,
-      "interactive": null,
-      "healthCheck": null,
-      "essential": true,
-      "links": null,
-      "hostname": null,
-      "extraHosts": null,
-      "pseudoTerminal": null,
-      "user": null,
-      "readonlyRootFilesystem": null,
-      "dockerLabels": null,
-      "systemControls": null,
-      "privileged": null,
-      "name": "staging-identity-backend"
-    }
-  ],
-  "placementConstraints": [],
-  "memory": "2048",
-  "taskRoleArn": "arn:aws:iam::185944984862:role/ecsTaskExecutionRole",
-  "compatibilities": [
-    "EC2",
-    "FARGATE"
-  ],
-  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/staging-identity-backend:15",
-  "family": "staging-identity-backend",
-  "requiresAttributes": [
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.execution-role-awslogs"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.ecr-auth"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.secrets.asm.environment-variables"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.task-iam-role"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.execution-role-ecr-pull"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.task-eni"
-    }
-  ],
-  "pidMode": null,
-  "requiresCompatibilities": [
-    "FARGATE"
-  ],
-  "networkMode": "awsvpc",
-  "cpu": "1024",
-  "revision": 15,
-  "status": "ACTIVE",
-  "inferenceAccelerators": null,
-  "proxyConfiguration": null,
-  "volumes": []
+    ],
+    "memory": "2048",
+    "taskRoleArn": "arn:aws:iam::185944984862:role/ecsTaskExecutionRole",
+    "family": "staging-identity-backend",
+    "pidMode": null,
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "1024",
+    "inferenceAccelerators": null,
+    "proxyConfiguration": null,
+    "volumes": [],
+    "tags": []
 }
