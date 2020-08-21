@@ -9,7 +9,7 @@
         "logDriver": "awslogs",
         "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/staging-identity-backend",
+          "awslogs-group": "/ecs/identity-backend",
           "awslogs-region": "eu-west-2",
           "awslogs-stream-prefix": "ecs"
         }
@@ -59,7 +59,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "staging-identity-backend"
+      "name": "identity-backend"
     }
   ],
   "placementConstraints": [],
@@ -69,8 +69,8 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/staging-identity-backend:28",
-  "family": "staging-identity-backend",
+  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:185944984862:task-definition/identity-backend:1",
+  "family": "identity-backend",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -133,7 +133,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "1024",
-  "revision": 28,
+  "revision": 1,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
