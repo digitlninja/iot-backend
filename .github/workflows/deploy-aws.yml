@@ -68,7 +68,7 @@ jobs:
       uses: brunocascio/amazon-ecs-render-task-definition@v1.2.0
       with:
         task-definition: ECS-task-definition.json
-        container-name: staging-identity-backend
+        container-name: identity-backend
         image: ${{ steps.build-image.outputs.image }}
         aws-sm-name: IoTBackend-Staging
 
