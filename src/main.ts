@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
+import { AppModule } from './app.module';
 import { BadRequestTransformer } from './users/auth/error-transformer.filter';
 import { AppConfigService } from './config/configuration.service';
 
