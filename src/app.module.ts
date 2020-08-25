@@ -12,39 +12,41 @@ import { AuthConfig } from './users/auth/auth.config';
 import configuration from './config/configuration';
 import { AppConfigService } from './config/configuration.service';
 import { AppConfigModule } from './config/app-config.module';
+import { HealthController } from "./health.controller";
 
 @Module({
-  imports: [
-    GraphQLModule.forRoot({
-      typePaths: ['./**/*.graphql'],
-      definitions: {
-        path: join(process.cwd(), 'src/graphql.ts'),
-        emitTypenameField: true,
-      },
-      context: ({ req, res }) => ({ req, res }),
-      cors: {
-        credentials: true,
-        origin: process.env.IOT_UI_URL || 'http://localhost:3000',
-      },
-    }),
-    ConfigModule.forRoot({
-      load: [configuration],
-      isGlobal: true,
-    }),
-    MongooseModule.forRootAsync({
-      imports: [AppConfigModule],
-      useFactory: (appConfigService: AppConfigService) => ({
-        uri:
-          appConfigService.appEnv === 'nonDocker'
-            ? appConfigService.databaseUrlNonDocker
-            : appConfigService.databaseUrl,
-      }),
-      inject: [AppConfigService],
-    }),
-    DashboardModule,
-    UsersModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService, AuthService, AuthConfig],
+    imports: [
+        GraphQLModule.forRoot({
+            typePaths: ['./**/*.graphql'],
+            definitions: {
+                path: join(process.cwd(), 'src/graphql.ts'),
+                emitTypenameField: true,
+            },
+            context: ({req, res}) => ({req, res}),
+            cors: {
+                credentials: true,
+                origin: process.env.IOT_UI_URL || 'http://localhost:3000',
+            },
+        }),
+        ConfigModule.forRoot({
+            load: [configuration],
+            isGlobal: true,
+        }),
+        MongooseModule.forRootAsync({
+            imports: [AppConfigModule],
+            useFactory: (appConfigService: AppConfigService) => ({
+                uri:
+                    appConfigService.appEnv === 'nonDocker'
+                        ? appConfigService.databaseUrlNonDocker
+                        : appConfigService.databaseUrl,
+            }),
+            inject: [AppConfigService],
+        }),
+        DashboardModule,
+        UsersModule,
+    ],
+    controllers: [AppController, HealthController],
+    providers: [AppService, AuthService, AuthConfig],
 })
-export class AppModule {}
+export class AppModule {
+}
