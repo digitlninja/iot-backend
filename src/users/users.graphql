@@ -129,6 +129,7 @@ union ForgotPasswordResult =
     ForgotPasswordSuccess
   | ValidationFailed
   | LimitExceeded
+  | UserNotConfirmed
   | ErrorResult
 
 union ConfirmPasswordResult =
