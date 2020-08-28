@@ -148,5 +148,5 @@ export interface IMutation {
 
 export type LoginResult = CognitoTokens | IncorrectCredentials | TooManyPasswordAttempts | UsernameNotFound | UserNotConfirmed | ValidationFailed | ErrorResult;
 export type SignUpResult = User | UsernameExists | ValidationFailed | ErrorResult;
-export type ForgotPasswordResult = ForgotPasswordSuccess | ValidationFailed | LimitExceeded | ErrorResult;
+export type ForgotPasswordResult = ForgotPasswordSuccess | ValidationFailed | UserNotConfirmed | LimitExceeded | ErrorResult;
 export type ConfirmPasswordResult = ConfirmPasswordSuccess | ValidationFailed | ExpiredCode | LimitExceeded | ErrorResult;
