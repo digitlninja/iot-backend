@@ -1,10 +1,10 @@
-
 /** ------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
  * -------------------------------------------------------
  */
 
 /* tslint:disable */
+
 /* eslint-disable */
 export interface SignUpInput {
     username: string;
@@ -133,20 +133,44 @@ export interface ConfirmPasswordSuccess {
 
 export interface IQuery {
     __typename?: 'IQuery';
+
     users(): User[] | Promise<User[]>;
 }
 
 export interface IMutation {
     __typename?: 'IMutation';
+
     signUp(user?: SignUpInput): SignUpResult | Promise<SignUpResult>;
+
     logIn(user?: LoginInput): LoginResult | Promise<LoginResult>;
+
     logOut(): boolean | Promise<boolean>;
+
     forgotPassword(username: string): ForgotPasswordResult | Promise<ForgotPasswordResult>;
+
     confirmPassword(confirmPasswordInput?: ConfirmPasswordInput): ConfirmPasswordResult | Promise<ConfirmPasswordResult>;
+
     refreshUserTokens(): CognitoTokens | Promise<CognitoTokens>;
 }
 
-export type LoginResult = CognitoTokens | IncorrectCredentials | TooManyPasswordAttempts | UsernameNotFound | UserNotConfirmed | ValidationFailed | ErrorResult;
+export type LoginResult =
+    CognitoTokens
+    | IncorrectCredentials
+    | TooManyPasswordAttempts
+    | UsernameNotFound
+    | UserNotConfirmed
+    | ValidationFailed
+    | ErrorResult;
 export type SignUpResult = User | UsernameExists | ValidationFailed | ErrorResult;
-export type ForgotPasswordResult = ForgotPasswordSuccess | ValidationFailed | LimitExceeded | UserNotConfirmed | ErrorResult;
-export type ConfirmPasswordResult = ConfirmPasswordSuccess | ValidationFailed | ExpiredCode | LimitExceeded | ErrorResult;
+export type ForgotPasswordResult =
+    ForgotPasswordSuccess
+    | ValidationFailed
+    | LimitExceeded
+    | UserNotConfirmed
+    | ErrorResult;
+export type ConfirmPasswordResult =
+    ConfirmPasswordSuccess
+    | ValidationFailed
+    | ExpiredCode
+    | LimitExceeded
+    | ErrorResult;

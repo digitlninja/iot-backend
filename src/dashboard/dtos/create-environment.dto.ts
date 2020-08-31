@@ -1,4 +1,4 @@
 export class CreateEnvironmentDTO {
-  name: string;
-  slug: string;
+    name: string;
+    slug: string;
 }

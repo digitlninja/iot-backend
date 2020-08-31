@@ -8,16 +8,17 @@ import { AuthService } from './auth/auth.service';
 import { AuthConfig } from './auth/auth.config';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
-    CacheModule.register(),
-  ],
-  providers: [
-    UsersService,
-    UsersRepository,
-    UsersResolver,
-    AuthService,
-    AuthConfig,
-  ],
+    imports: [
+        MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+        CacheModule.register(),
+    ],
+    providers: [
+        UsersService,
+        UsersRepository,
+        UsersResolver,
+        AuthService,
+        AuthConfig,
+    ],
 })
-export class UsersModule {}
+export class UsersModule {
+}
