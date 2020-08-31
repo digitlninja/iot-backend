@@ -16,4 +16,4 @@ jobs:
         - run: npm test
           env:
             APP_ENV: nonDocker
-        - run: npm start:prod
+        - run: npm start

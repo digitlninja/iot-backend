@@ -1,4 +1,4 @@
-import {CodeDeliveryDetails} from "amazon-cognito-identity-js";
+import { CodeDeliveryDetails } from "amazon-cognito-identity-js";
 
 export const signUpUserInput = {
     firstName: 'Darth',

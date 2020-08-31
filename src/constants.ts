@@ -2,7 +2,7 @@
 export const ENVIRONMENT = process.env.APP_ENV || 'development';
 
 export const cognitoTokenTypes = {
-  id: 'id',
-  access: 'access',
-  refresh: 'refresh',
+    id: 'id',
+    access: 'access',
+    refresh: 'refresh',
 };

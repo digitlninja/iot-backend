@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose';
 
 export const SensorTypeSchema = new mongoose.Schema(
-  {
-    name: String,
-  },
-  { timestamps: true },
+    {
+        name: String,
+    },
+    { timestamps: true },
 );

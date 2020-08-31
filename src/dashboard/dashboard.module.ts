@@ -6,13 +6,14 @@ import { DashboardController } from './dashboard.controller';
 import { EnvironmentSchema } from 'src/db/schemas/environment.schema';
 
 @Module({
-  providers: [DashboardRepository],
-  imports: [
-    MongooseModule.forFeature([
-      { name: 'Customer', schema: CustomerSchema },
-      { name: 'Environment', schema: EnvironmentSchema },
-    ]),
-  ],
-  controllers: [DashboardController],
+    providers: [DashboardRepository],
+    imports: [
+        MongooseModule.forFeature([
+            { name: 'Customer', schema: CustomerSchema },
+            { name: 'Environment', schema: EnvironmentSchema },
+        ]),
+    ],
+    controllers: [DashboardController],
 })
-export class DashboardModule {}
+export class DashboardModule {
+}

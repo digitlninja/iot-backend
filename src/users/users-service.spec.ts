@@ -1,7 +1,7 @@
-import {Test} from '@nestjs/testing';
-import {UsersService} from './users.service';
-import {AuthService} from './auth/auth.service';
-import {UsersRepository} from './users.repository';
+import { Test } from '@nestjs/testing';
+import { UsersService } from './users.service';
+import { AuthService } from './auth/auth.service';
+import { UsersRepository } from './users.repository';
 import {
     accessTokens,
     authServiceMock,
@@ -50,7 +50,7 @@ describe('UsersService', () => {
             expect(results).toEqual(users);
         });
         it('returns no users', async () => {
-            expect.assertions(2);
+            expect.assertions(1);
             jest.spyOn(usersRepository, 'getUsers').mockResolvedValueOnce([]);
             const results = await usersService.getUsers();
             expect(results).toEqual([]);
