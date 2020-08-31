@@ -1,13 +1,14 @@
-import {Test} from '@nestjs/testing';
-import {UsersService} from './users.service';
-import {AuthService} from './auth/auth.service';
-import {UsersRepository} from './users.repository';
+import { Test } from '@nestjs/testing';
+import { UsersService } from './users.service';
+import { AuthService } from './auth/auth.service';
+import { UsersRepository } from './users.repository';
 import {
     accessTokens,
     authServiceMock,
     codeDeliveryDetails,
-    confirmPasswordInput,
+    signUpUserInput,
     loginUserInput,
+    confirmPasswordInput,
     LimitExceededException,
     ExpiredCodeException,
     NotAuthorizedException,
@@ -15,7 +16,6 @@ import {
     UserNotConfirmedException,
     userRepositoryMock,
     users,
-    signUpUserInput
 } from "./users-test-types";
 
 describe('UsersService', () => {
