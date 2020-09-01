@@ -10,7 +10,7 @@ import {
     ForgotPasswordSuccess,
     ConfirmPasswordResult,
 } from 'src/graphql';
-import { GqlAuthGuard } from './auth/gql-auth.guard';
+import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth/auth.service';
 import { RegisterDTO } from './types/register.dto';
 import { LoginDTO } from './types/login.dto';
@@ -41,7 +41,7 @@ export class UsersResolver {
     };
 
     @Query()
-    @UseGuards(GqlAuthGuard)
+    @UseGuards(AuthGuard)
     async users(): Promise<User[]> {
         return await this.usersService.getUsers();
     }

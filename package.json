@@ -21,6 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@golevelup/nestjs-testing": "^0.1.2",
     "@hapi/joi": "^17.1.1",
     "@nestjs/common": "^7.0.0",
     "@nestjs/config": "^0.5.0",
@@ -40,6 +41,7 @@
     "graphql": "^15.3.0",
     "graphql-tools": "^6.0.14",
     "jwk-to-pem": "^2.0.4",
+    "mock-jwks": "^0.3.0",
     "mongoose": "^5.9.24",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -63,6 +65,7 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
     "jest": "26.0.1",
+    "mocked-env": "^1.3.2",
     "prettier": "^1.19.1",
     "supertest": "^4.0.2",
     "ts-jest": "26.1.0",

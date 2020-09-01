@@ -16,7 +16,7 @@ import { AuthConfig } from './auth.config';
 import { TokenHeader, PublicKeyDictionary, Claim } from './types/types';
 
 @Injectable()
-export class GqlAuthGuard implements CanActivate, OnModuleInit {
+export class AuthGuard implements CanActivate, OnModuleInit {
     private cognitoIssuer = `https://cognito-idp.${this.authConfig.region}.amazonaws.com/${this.authConfig.userPoolId}`;
     private jwkEndpoint = `${this.cognitoIssuer}/.well-known/jwks.json`;
 
@@ -58,7 +58,7 @@ export class GqlAuthGuard implements CanActivate, OnModuleInit {
             keys[currentKey.kid] = { instance: currentKey, pem };
             return keys;
         }, {} as PublicKeyDictionary);
-
+        console.log({ publicKeyDictionary })
         return publicKeyDictionary;
     }
 
