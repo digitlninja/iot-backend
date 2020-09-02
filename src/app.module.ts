@@ -39,6 +39,7 @@ import { HealthController } from "./health.controller";
                     appConfigService.appEnv === 'nonDocker'
                         ? appConfigService.databaseUrlNonDocker
                         : appConfigService.databaseUrl,
+                dbName: 'iot'
             }),
             inject: [AppConfigService],
         }),

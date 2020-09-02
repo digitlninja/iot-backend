@@ -6,7 +6,7 @@ import {
     CognitoUserAttribute,
     CognitoUserPool,
     CognitoUserSession,
-    CognitoRefreshToken,
+    CognitoRefreshToken, ISignUpResult,
 } from 'amazon-cognito-identity-js';
 import { CognitoTokens, ConfirmPasswordSuccess } from 'src/graphql';
 import { LoginDTO } from '../types/login.dto';
@@ -27,7 +27,7 @@ export class AuthService {
         });
     }
 
-    signUp(user: RegisterDTO): Promise<CognitoUser> {
+    signUp(user: RegisterDTO): Promise<ISignUpResult> {
         const { email, username, firstName, lastName, password } = user;
 
         const attributeList = [
@@ -54,7 +54,7 @@ export class AuthService {
                     console.log('[Auth Service: Cognito signUp() error]', error);
                     reject(error);
                 }
-                resolve(result.user);
+                resolve(result);
             });
         });
     }

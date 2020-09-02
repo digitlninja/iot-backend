@@ -14,7 +14,7 @@ export class UsersRepository {
     }
 
     async createUser(user: SignUpInput): Promise<User> {
-        const newUser = new this.userModel({ user });
+        const newUser = new this.userModel(user);
         return (await newUser.save()).toObject();
     }
 }
