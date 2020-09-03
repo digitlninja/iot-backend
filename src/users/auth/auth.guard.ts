@@ -58,7 +58,6 @@ export class AuthGuard implements CanActivate, OnModuleInit {
             keys[currentKey.kid] = { instance: currentKey, pem };
             return keys;
         }, {} as PublicKeyDictionary);
-        console.log({ publicKeyDictionary })
         return publicKeyDictionary;
     }
 
