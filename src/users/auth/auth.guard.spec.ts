@@ -76,6 +76,7 @@ describe('AuthGuard', () => {
 
     describe('validateToken()', () => {
         it('returns validation result', async () => {
+            expect.assertions(1);
             const authGuardProto = Object.getPrototypeOf(authGuard);
             jest.spyOn(authGuardProto, '_getEncodedAuthTokenFromHeader').mockReturnValueOnce(jwtTokenMock);
             jest.spyOn(authGuardProto, '_getDecodedJwtHeader').mockReturnValueOnce(decodedJwtHeaderMock);
@@ -100,6 +101,7 @@ describe('AuthGuard', () => {
             }
         });
         it('throws an HttpException if an invalid JWT token header is given with auth header "Bearer"', async () => {
+            expect.assertions(1);
             const authGuardProto = Object.getPrototypeOf(authGuard);
             jest.spyOn(authGuardProto, '_getDecodedJwtHeader').mockReturnValueOnce('v86at79y82');
             jest.spyOn(authGuardProto, '_getPublicKeyDictionary').mockReturnValueOnce(publicKeyDictionaryMock);
@@ -151,9 +153,5 @@ describe('AuthGuard', () => {
             expect(() => authGuardProto._getEncodedAuthTokenFromHeader('ya7u8vijwjankll[vwa')).toThrow(HttpException);
         });
 
-    });
-
-    afterEach(() => {
-        // jwks.stop();
     });
 });
