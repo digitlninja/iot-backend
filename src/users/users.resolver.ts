@@ -20,7 +20,7 @@ import {
     createErrorResultFromAWSSignUpException,
     createErrorResultFromAWSForgotPasswordException,
     createErrorResultFromAWSConfirmPasswordException,
-} from 'src/shared/helpers';
+} from '../shared/helpers';
 import { ConfirmPasswordDTO } from './types/confirm-password.dto';
 
 interface MyError extends Error {

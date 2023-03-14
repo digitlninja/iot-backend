@@ -43,7 +43,6 @@ import { HealthController } from "./health.controller";
             }),
             inject: [AppConfigService],
         }),
-        DashboardModule,
         UsersModule,
     ],
     controllers: [AppController, HealthController],
